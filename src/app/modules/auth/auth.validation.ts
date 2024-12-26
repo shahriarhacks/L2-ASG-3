@@ -1,3 +1,4 @@
+import { log } from "console";
 import { z } from "zod";
 
 const createUser = z.object({
@@ -9,6 +10,14 @@ const createUser = z.object({
    }),
 });
 
-export const UserValidation = {
+const loginValidation = z.object({
+   body: z.object({
+      email: z.string().email(),
+      password: z.string().min(6).max(255),
+   }),
+});
+
+export const AuthValidation = {
    createUser,
+   loginValidation,
 };
