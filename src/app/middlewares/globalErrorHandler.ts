@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 import zodErrorHandler from "../errors/zodValidation";
 import validationError from "../errors/validationError";
 import castErrorHandler from "../errors/castError";
-import duplicateKeyEntry from "../errors/duplicteKey";
+import duplicateKeyEntry from "../errors/duplicateKey";
 import ApplicationError from "../errors/ApplicationError";
 
 const globalErrorHandler = (
