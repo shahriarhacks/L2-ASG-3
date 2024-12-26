@@ -7,7 +7,7 @@ const router = Router();
 
 router.post(
    "/register",
-   requestValidator(UserValidation.createUser),
+   // requestValidator(UserValidation.createUser),
    AuthController.registerUser,
 );
 
