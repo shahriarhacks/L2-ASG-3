@@ -15,11 +15,12 @@ const globalErrorHandler = (
    res: Response,
    _next: NextFunction,
 ) => {
+   // console.log(error.errors, error.message, error.name, error.code);
    let statusCode = error.statusCode || 500;
-   let message = error.message || "Something went wrong!";
+   let message = error.message;
    let details: TDetails[] = [
       {
-         path: "error",
+         path: "N/A",
          message: "Something went wrong!",
       },
    ];
@@ -44,6 +45,15 @@ const globalErrorHandler = (
       statusCode = simplifiedError.statusCode;
       message = simplifiedError.message;
       details = simplifiedError.details;
+   } else if (error?.name === "JsonWebTokenError") {
+      statusCode = 401;
+      message = "Unauthorized";
+      details = [
+         {
+            path: "auth:token",
+            message: error.message,
+         },
+      ];
    } else if (error instanceof ApplicationError) {
       statusCode = error.statusCode;
       message = error.message;
@@ -68,7 +78,6 @@ const globalErrorHandler = (
       success: false,
       message,
       error: { details },
-      // error,
       stack: envs.env === "development" ? error.stack : "🥞",
    });
 };
