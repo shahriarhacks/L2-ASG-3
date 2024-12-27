@@ -1,7 +1,9 @@
 {
+   "include": ["src", "src/types"], // which files to compile
+   "exclude": ["node_modules"], // which files to skip
    "compilerOptions": {
       /* Visit https://aka.ms/tsconfig to read more about this file */
-
+      "typeRoots": ["./node_modules/@types", "./src/types"],
       /* Projects */
       // "incremental": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
       // "composite": true,                                /* Enable constraints that allow a TypeScript project to be used with project references. */
