@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { AuthRouter } from "../modules/auth/auth.routes";
+import { BlogRouter } from "../modules/blog/blog.routes";
 
 interface IModuleRouter {
    path: string;
@@ -12,6 +13,10 @@ const moduleRouters: IModuleRouter[] = [
    {
       path: "/auth",
       route: AuthRouter,
+   },
+   {
+      path: "/blogs",
+      route: BlogRouter,
    },
 ];
 
