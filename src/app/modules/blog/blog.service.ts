@@ -3,6 +3,7 @@ import { IBlog } from "./blog.interface";
 import { Blog } from "./blog.model";
 import { User } from "../auth/auth.model";
 import ApplicationError from "../../errors/ApplicationError";
+import QueryBuilder from "../../builder/queryBuilder";
 
 const createBlogIntoDB = async (payload: Partial<IBlog>, user: JwtPayload) => {
    const finedUser = await User.findOne({ email: user.email });
@@ -11,6 +12,15 @@ const createBlogIntoDB = async (payload: Partial<IBlog>, user: JwtPayload) => {
    }
    payload.author = finedUser._id;
    const result = (await Blog.create(payload)).populate("author");
+   return result;
+};
+
+const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
+   const blogQuery = new QueryBuilder(Blog.find().populate("author"), query)
+      .search(["title", "content"])
+      .filter()
+      .sort();
+   const result = await blogQuery.queryModel;
    return result;
 };
 
@@ -30,4 +40,5 @@ export const BlogService = {
    createBlogIntoDB,
    updateBlogIntoDB,
    deleteBlogFromDB,
+   getAllBlogsFromDB,
 };

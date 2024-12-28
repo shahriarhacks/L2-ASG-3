@@ -16,6 +16,16 @@ const createBlog = catchAsync(async (req, res) => {
    });
 });
 
+const getAllBlogs = catchAsync(async (req, res) => {
+   const result = await BlogService.getAllBlogsFromDB(req.query);
+   responder(res, {
+      statusCode: 200,
+      message: "All blogs fetched successfully",
+      success: true,
+      data: result,
+   });
+});
+
 const updateBlog = catchAsync(async (req, res) => {
    const result = await BlogService.updateBlogIntoDB(req.params.id, req.body);
    responder(res, {
@@ -39,4 +49,5 @@ export const BlogController = {
    createBlog,
    updateBlog,
    deleteBlog,
+   getAllBlogs,
 };

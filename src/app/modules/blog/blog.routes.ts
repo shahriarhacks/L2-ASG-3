@@ -13,6 +13,7 @@ router.post(
    requestValidator(BlogValidation.createBlog),
    BlogController.createBlog,
 );
+router.get("/", BlogController.getAllBlogs);
 
 router.patch(
    "/:id",
