@@ -460,3 +460,8 @@ For inquiries or support, contact:
 ---
 
 Thank you for using **Backend Blog Application**! We appreciate your feedback and suggestions.
+
+### Admin Credentials
+
+- **Email**: email@email.com
+- **Password**: password
