@@ -15,7 +15,7 @@ const globalErrorHandler = (
    res: Response,
    _next: NextFunction,
 ) => {
-   // console.log(error.errors, error.message, error.name, error.code);
+   console.log(error.errors, error.message, error.name, error.code, { error });
    let statusCode = error.statusCode || 500;
    let message = error.message;
    let details: TDetails[] = [
@@ -59,7 +59,7 @@ const globalErrorHandler = (
       message = error.message;
       details = [
          {
-            path: "error",
+            path: "N/A",
             message: error.message,
          },
       ];
@@ -67,16 +67,16 @@ const globalErrorHandler = (
       message = error.message;
       details = [
          {
-            path: "error",
+            path: "N/A",
             message: error.message,
          },
       ];
    }
 
    res.status(statusCode).json({
-      statusCode,
       success: false,
       message,
+      statusCode,
       error: { details },
       stack: envs.env === "development" ? error.stack : "🥞",
    });
