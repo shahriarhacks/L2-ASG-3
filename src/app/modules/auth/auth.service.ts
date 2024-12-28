@@ -18,7 +18,9 @@ const loginUserFromDB = async (payload: {
    email: string;
    password: string;
 }) => {
-   const user = await User.findOne({ email: payload.email });
+   const user = await User.findOne({ email: payload.email }).select(
+      "+password",
+   );
    if (!user) {
       throw new ApplicationError(404, "Invalid user email");
    }
