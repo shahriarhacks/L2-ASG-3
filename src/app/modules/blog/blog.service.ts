@@ -37,7 +37,8 @@ const updateBlogIntoDB = async (
    if (!blog) {
       throw new ApplicationError(404, "Blog not found");
    }
-   if (blog.author !== dbUser._id) {
+
+   if (blog.author?.toString() !== dbUser._id?.toString()) {
       throw new ApplicationError(
          403,
          "You are not authorized to update this blog",
@@ -59,7 +60,8 @@ const deleteBlogFromDB = async (id: string, user: JwtPayload) => {
    if (!blog) {
       throw new ApplicationError(404, "Blog not found");
    }
-   if (blog.author !== dbUser._id) {
+
+   if (blog.author?.toString() !== dbUser._id?.toString()) {
       throw new ApplicationError(
          403,
          "You are not authorized to delete this blog",

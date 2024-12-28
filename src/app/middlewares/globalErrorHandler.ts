@@ -15,7 +15,7 @@ const globalErrorHandler = (
    res: Response,
    _next: NextFunction,
 ) => {
-   console.log(error.errors, error.message, error.name, error.code, { error });
+   // console.log(error.errors, error.message, error.name, error.code, { error });
    let statusCode = error.statusCode || 500;
    let message = error.message;
    let details: TDetails[] = [
