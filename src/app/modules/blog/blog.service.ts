@@ -24,14 +24,48 @@ const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
    return result;
 };
 
-const updateBlogIntoDB = async (id: string, payload: Partial<IBlog>) => {
+const updateBlogIntoDB = async (
+   id: string,
+   payload: Partial<IBlog>,
+   user: JwtPayload,
+) => {
+   const dbUser = await User.findOne({ email: user.email });
+   if (!dbUser) {
+      throw new ApplicationError(404, "User not found");
+   }
+   const blog = await Blog.findById(id);
+   if (!blog) {
+      throw new ApplicationError(404, "Blog not found");
+   }
+   if (blog.author !== dbUser._id) {
+      throw new ApplicationError(
+         403,
+         "You are not authorized to update this blog",
+      );
+   }
+
    const result = await Blog.findByIdAndUpdate(id, payload, {
       new: true,
    }).populate("author");
    return result;
 };
 
-const deleteBlogFromDB = async (id: string) => {
+const deleteBlogFromDB = async (id: string, user: JwtPayload) => {
+   const dbUser = await User.findOne({ email: user.email });
+   if (!dbUser) {
+      throw new ApplicationError(404, "User not found");
+   }
+   const blog = await Blog.findById(id);
+   if (!blog) {
+      throw new ApplicationError(404, "Blog not found");
+   }
+   if (blog.author !== dbUser._id) {
+      throw new ApplicationError(
+         403,
+         "You are not authorized to delete this blog",
+      );
+   }
+
    const result = await Blog.findByIdAndDelete(id);
    return result;
 };

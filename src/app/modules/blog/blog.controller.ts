@@ -27,7 +27,11 @@ const getAllBlogs = catchAsync(async (req, res) => {
 });
 
 const updateBlog = catchAsync(async (req, res) => {
-   const result = await BlogService.updateBlogIntoDB(req.params.id, req.body);
+   const result = await BlogService.updateBlogIntoDB(
+      req.params.id,
+      req.body,
+      req.user as JwtPayload,
+   );
    responder(res, {
       statusCode: 200,
       success: true,
@@ -37,7 +41,7 @@ const updateBlog = catchAsync(async (req, res) => {
 });
 
 const deleteBlog = catchAsync(async (req, res) => {
-   await BlogService.deleteBlogFromDB(req.params.id);
+   await BlogService.deleteBlogFromDB(req.params.id, req.user as JwtPayload);
    responder(res, {
       statusCode: 200,
       success: true,
